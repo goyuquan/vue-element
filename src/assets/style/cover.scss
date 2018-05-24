@@ -1,0 +1,13 @@
+.el-container.is-vertical {
+  min-height: 100vh;
+}
+
+.el-aside {
+  width: auto!important;
+}
+
+.el-button--primary {
+  > span {
+    color: #fff;
+  }
+}
