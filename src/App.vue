@@ -6,7 +6,10 @@ export default {
   name: 'app',
   data () {
     return {
-      isCollapse: true
+      isCollapse: false,
+      menu: {
+        suer: '/user'
+      },
     }
   },
   computed: {
@@ -18,15 +21,20 @@ export default {
     document.body.removeChild(document.getElementById('loader'));
   },
   methods: {
-    onLogout() {
-      this.$store.dispatch('logOut')
+    onSelect(key, keyPath) {
+        // console.log(key, keyPath);
+        console.log(this.$route.path)
+        // this.$router.push(key)
     },
     handleOpen(key, keyPath) {
         console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
-    }
+    },
+    onLogout() {
+      this.$store.dispatch('logOut')
+    },
   }
 }
 </script>

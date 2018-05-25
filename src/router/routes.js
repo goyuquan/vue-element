@@ -6,9 +6,9 @@ const config = {
   dashboard: () => import('../page/dashboard.vue'),
 
   setting: () => import('../page/setting/setting.vue'),
-  nest: {
-    nest: () => import(/* webpackChunkName: "nest" */ '../page/nest/nest/nest.vue'),
-    nestDetail: () => import(/* webpackChunkName: "nest" */'../page/nest/nestDetail/nestDetail.vue'),
+  user: {
+    user: () => import(/* webpackChunkName: "user" */ '../page/user/user/user.vue'),
+    userDetail: () => import(/* webpackChunkName: "user" */'../page/user/userDetail/userDetail.vue'),
   }
 }
 
@@ -22,11 +22,11 @@ const routes = [
       { name: '设置', path: 'setting', component: config.setting },
       {
         name: '嵌套组件',
-        path: 'nest',
+        path: 'user',
         component: wrap,
         children: [
-          { name: '嵌套详情', path: 'detail', component: config.nest.nestDetail },
-          { path: '', component: config.nest.nest }
+          { name: '嵌套详情', path: 'detail', component: config.user.userDetail },
+          { path: '', component: config.user.user }
         ]
       },
       { name: '仪表盘', path: 'dashboard', component: config.dashboard },

@@ -20,7 +20,7 @@ export function find (list, f) {
 
 /**
  * Deep copy the given object considering circular structure.
- * This function caches all nested objects and its copies.
+ * This function caches all usered objects and its copies.
  * If it detects circular structure, use cached copy to avoid infinite loop.
  *
  * @param {*} obj

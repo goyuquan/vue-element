@@ -1,13 +1,13 @@
-<template src="./nest.html"> </template>
+<template src="./userDetail.html"> </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex';
 import api from "../../../api"
 export default {
-    name: 'nest',
+    name: 'userDetail',
     data () {
         return {
-            msg: 'Welcome to Your Vue.js nest'
+            msg: 'Welcome to Your Vue.js userDetail'
         }
     },
     computed: {
@@ -38,4 +38,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped src="./nest.scss"> </style>
+<style lang="scss" scoped src="./userDetail.scss"> </style>

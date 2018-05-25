@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="login_form" >
-      <h1>登陆</h1>
+      <h1>登录</h1>
       <p class="sub_title">联众金融用户管理系统</p>
       <el-row>
         <el-col :span="24">
@@ -18,7 +18,7 @@
         </el-col>
       </el-row>
       <el-form-item>
-        <el-button type="primary" @click="login()">登录</el-button>
+        <el-button type="primary" @click="login()" :disabled="!valid">登录</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -43,6 +43,11 @@ export default {
           { min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'change' }
         ],
       }
+    }
+  },
+  computed: {
+    valid() {
+      return this.ruleForm.name && this.ruleForm.password;
     }
   },
   methods: {

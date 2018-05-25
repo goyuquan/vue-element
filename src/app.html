@@ -1,26 +1,33 @@
 <div id="app">
   <el-container>
     <el-header v-if="isAuthenticated" height="64px" class="header">
-      <el-radio-group v-model="isCollapse">
-        <el-radio border :label="false">展开</el-radio>
-        <el-radio border :label="true">收起</el-radio>
-      </el-radio-group>
-      Header
-      isAuthenticated {{isAuthenticated}}
-      <el-button type="text" @click="onLogout()">退出</el-button>
+      <div class="left">
+        <i :class="[isCollapse ? 'active' : '', 'el-icon-more', 'nav_toggle']"
+          @click="isCollapse = !isCollapse"></i>
+        <div class="title"> 用户管理系统 </div>
+      </div>
+      <div class="right">
+        <el-button type="text" @click="onLogout()" class="logout">退出</el-button>
+      </div>
     </el-header>
     <el-container>
       <el-aside class="aside" v-if="isAuthenticated">
         <el-menu
-        default-active="1-4-1"
-        class="el-menu-vertical-demo"
-        background-color="#fff"
-        text-color="#333"
-        active-text-color="#009688"
-        @open="handleOpen"
-        @close="handleClose"
-        :collapse="isCollapse">
-          <el-submenu index="1">
+          :default-active="$route.path"
+          class="el-menu-vertical-demo"
+          background-color="#fff"
+          text-color="#333"
+          :router="true"
+          active-text-color="#009688"
+          @open="handleOpen"
+          @select="onSelect"
+          @close="handleClose"
+          :collapse="isCollapse">
+          <el-menu-item index="/user">
+            <i class="el-icon-tickets"></i>
+            <span slot="title">用户管理</span>
+          </el-menu-item>
+          <!-- <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span slot="title">导航一</span>
@@ -49,7 +56,7 @@
           <el-menu-item index="4">
             <i class="el-icon-setting"></i>
             <span slot="title">导航四</span>
-          </el-menu-item>
+          </el-menu-item> -->
         </el-menu>
       </el-aside>
       <el-main>

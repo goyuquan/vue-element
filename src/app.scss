@@ -1,7 +1,43 @@
+@import "./assets/style/common.scss";
+
 .header {
-  box-shadow: 0 2px 5px rgba(0,0,0,.26);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: #009688;
+  box-shadow: 0 2px 5px rgba(0,0,0,.26);
   z-index: 2;
+}
+.header .left {
+  height: 64px;
+  display: flex;
+  align-items: center;
+}
+.header .nav_toggle {
+  color: #fff;
+  height: 64px;
+  width: 64px;
+  line-height: 64px;
+  text-align: center;
+  position: relative;
+  left: -20px;
+}
+.header .nav_toggle:hover {
+  background: #4DB6AC;
+  cursor: pointer;
+}
+.header .nav_toggle.active {
+  background: #26A69A;
+}
+.header .title {
+  font-size: 1.6rem;
+  display: inline-block;
+  color: #fff;
+}
+.header .logout {
+  font-size: 1.2rem;
+  display: inline-block;
+  color: #fff;
 }
 
 .aside {

@@ -20,8 +20,8 @@ export default {
       list: [
         // { name: '/', url: 'dashbard' },
         { name: 'setting', url: '/setting' },
-        { name: 'nest', url: '/nest' },
-        { name: 'nestDetail', url: '/nest/detail' },
+        { name: 'user', url: '/user' },
+        { name: 'userDetail', url: '/user/detail' },
       ],
       msg: 'Welcome to Your Vue.js dashbard'
     }
