@@ -3,9 +3,7 @@ import App from './App';
 import router from './router/router';
 import store from './store';
 
-import './assets/element/index.css' //主题样式
-import './assets/style/init.scss'  //初始化样式
-import './assets/style/cover.scss'  //主题覆盖样式
+import './style.scss' //主题样式
 import {
   Pagination,
   Dialog,
