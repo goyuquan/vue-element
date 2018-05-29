@@ -43,3 +43,12 @@
 .aside {
   box-shadow: 0 2px 5px rgba(0,0,0,.26);
 }
+.breadcrumb {
+  padding-left: 10px;
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+.breadcrumb .current {
+  color: #aaa;
+  cursor: default;
+}

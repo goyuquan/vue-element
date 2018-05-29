@@ -1,7 +1,8 @@
 <template src="./app.html"> </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
+import api from "./api"
 export default {
   name: 'app',
   data () {
@@ -15,23 +16,22 @@ export default {
   computed: {
     ...mapGetters([
       'isAuthenticated'
-    ])
+    ]),
+    ...mapState({
+      breadcrumb: state => state.breadcrumb,
+    }),
   },
   mounted() {
-    document.body.removeChild(document.getElementById('loader'));
+    // api.common.firstLevelLst({id: 123}).then(
+    //   res => {
+    //     console.log(res);
+    //   }
+    // )
+    setTimeout(() => {
+      document.body.removeChild(document.getElementById('loader'));
+    }, 0)
   },
   methods: {
-    onSelect(key, keyPath) {
-        // console.log(key, keyPath);
-        console.log(this.$route.path)
-        // this.$router.push(key)
-    },
-    handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
     onLogout() {
       this.$store.dispatch('logOut')
     },

@@ -3,7 +3,7 @@ const common = require('./webpack.common.js');
 
 const proxy = {
   "/api": {
-    target: "http://localhost:3000",
+    target: "http://192.168.2.26:8080/",
     pathRewrite: {"^/api" : ""}
   },
   "/v2": {

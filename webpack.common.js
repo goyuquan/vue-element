@@ -3,39 +3,70 @@ const webpack = require('webpack');
 const { VueLoaderPlugin } = require('vue-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+const extractSass = new ExtractTextPlugin({
+    filename: "[name].[contenthash].css",
+    disable: process.env.NODE_ENV === "development"
+});
 
 module.exports = {
     entry: './src/main.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
-        chunkFilename: '[name].bundle.js?[chunkhash]',
+        chunkFilename: 'bundle/[name].bundle.js?[chunkhash]',
     },
     module: {
         rules: [
             {
                 test: /.css$/,
-                use: [
-                    'style-loader',
-                    'css-loader'
-                ]
+                use: [ 'style-loader', 'css-loader' ]
             },
+            // {
+            //   test: /\.scss$/,
+            //   use: [
+            //     'vue-style-loader',
+            //     'css-loader',
+            //     'sass-loader'
+            //   ]
+            // },
             {
                 test: /.(png|svg|jpg|gif)$/,
                 use: [
-                    'file-loader'
+                  {
+                    loader: 'file-loader',
+                    options: {
+                      name: '[path][name].[ext]',
+                      publicPath: './'
+                    }
+                  }
                 ]
             },
             {
                 test: /.(woff|woff2|eot|ttf|otf)$/,
                 use: [
-                    'file-loader'
+                  {
+                    loader: 'file-loader',
+                    options: {
+                      name: '[path][name].[ext]',
+                      publicPath: './'
+                    }
+                  }
                 ]
             },
-            {
-                test: /.vue$/,
-                loader: 'vue-loader'
-            },
+            { test: /.vue$/, loader: 'vue-loader' },
+            // { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
+            // {
+            //   test: /\.scss$/,
+            //   use: [{
+            //       loader: "style-loader" // 将 JS 字符串生成为 style 节点
+            //   }, {
+            //       loader: "css-loader" // 将 CSS 转化成 CommonJS 模块
+            //   }, {
+            //       loader: "sass-loader" // 将 Sass 编译成 CSS
+            //   }]
+            // }
         ]
     },
     plugins: [

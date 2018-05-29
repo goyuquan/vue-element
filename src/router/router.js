@@ -11,11 +11,14 @@ const config = {
   login: () => import('../page/auth/login.vue'),
   dashboard: () => import('../page/dashboard.vue'),
 
-  setting: () => import('../page/setting/setting.vue'),
   user: {
     user: () => import(/* webpackChunkName: "user" */ '../page/user/user.vue'),
-    userDetail: () => import(/* webpackChunkName: "user" */'../page/user/userDetail/userDetail.vue'),
-  }
+    create: () => import(/* webpackChunkName: "user" */'../page/user/create/create.vue'),
+    edit: () => import(/* webpackChunkName: "user" */'../page/user/edit/edit.vue'),
+    password: () => import(/* webpackChunkName: "user" */'../page/user/password/password.vue'),
+  },
+  role: () => import(/* webpackChunkName: "role" */ '../page/role/role.vue'),
+  src: () => import(/* webpackChunkName: "role" */ '../page/src/src.vue'),
 }
 
 const routes = [
@@ -25,19 +28,22 @@ const routes = [
     component: wrap,
     children: [
       { name: '登录', path: 'login', component: config.login, meta: { escapeAuth: true } },
-      { name: '设置', path: 'setting', component: config.setting },
       {
-        name: '嵌套组件',
+        name: '用户管理',
         path: 'user',
         component: wrap,
         children: [
-          { name: '嵌套详情', path: 'detail', component: config.user.userDetail },
-          { path: '', component: config.user.user }
+          { name: '创建', path: 'create', component: config.user.create },
+          { name: '编辑', path: 'edit', component: config.user.edit },
+          { name: '密码重置', path: 'password', component: config.user.password },
+          { path: '', component: config.user.user },
         ]
       },
+      { name: '角色管理', path: 'role', component: config.role },
+      { name: '资源管理', path: 'src', component: config.src },
       { name: '仪表盘', path: 'dashboard', component: config.dashboard },
-      { path: '', redirect: 'dashboard' },
-      { name: '找不到页面', path: '*', component: config.pageNotFound }
+      { path: '', redirect: '/user' },
+      { name: '找不到页面', path: '*', component: pageNotFound }
     ]
   }
 ];

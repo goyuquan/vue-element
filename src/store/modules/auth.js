@@ -27,9 +27,6 @@ const mutations = {
     state.status = false
     localStorage.removeItem('token')
   },
-  updateBreadcrumb (state, matched) {
-    state.breadcrumb = matched
-  }
 }
 
 const actions = {

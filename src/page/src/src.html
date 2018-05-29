@@ -1,0 +1,273 @@
+<div>
+  <el-card>
+    <el-form :inline="true">
+      <el-row>
+        <el-col :span="6">
+          <el-form-item label="系统名称">
+            <el-select v-model="name" size="small">
+              <el-option v-for="(item, index) in del" :key="index"  :label="item.name" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <div class="space_between_wrap">
+        <div>
+          <el-button type="warning" @click="onCreate" size="small">新增根资源</el-button>
+        </div>
+      </div>
+    </el-form>
+  </el-card> <br>
+
+  <el-card>
+    <el-table :data="tableData" style="width: 100%" stripe>
+      <el-table-column prop="name" label="资源名称" > </el-table-column>
+      <el-table-column prop="url" label="链接地址" > </el-table-column>
+      <el-table-column prop="type" label="资源类型" > </el-table-column>
+      <el-table-column prop="parent" label="上一级" > </el-table-column>
+      <el-table-column prop="sort" label="排序" > </el-table-column>
+      <el-table-column prop="status" label="状态" > </el-table-column>
+      <el-table-column prop="oprate" label="操作" >
+        <template slot-scope="scope">
+          <el-button type="text" @click="onEdit(3)">修改</el-button>
+          <el-button type="text" @click="onCreateChild(3)">添加子项</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </el-card>
+
+  <el-dialog title="新增根资源" :visible.sync="dialog.create.visible" width="30%" :close-on-click-modal="false">
+    <el-form :inline="true" label-width="100px" :model="dialog.create.formData" :rules="dialog.create.formRules" ref="dialog.create.formData">
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="资源名称" prop="name">
+            <el-input v-model="dialog.create.formData.name" size="small"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="资源状态" prop="status">
+            <el-select v-model="dialog.create.formData.status" size="small">
+              <el-option label="启用" value="启用"></el-option>
+              <el-option label="停用" value="停用"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="资源类型" prop="status">
+            <el-select v-model="dialog.create.formData.status" size="small">
+              <el-option label="启用" value="启用"></el-option>
+              <el-option label="停用" value="停用"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="链接地址">
+            <el-input v-model="dialog.create.formData.url" size="small"> </el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="上级目录" prop="parent">
+            <el-select v-model="dialog.create.formData.parent" size="small">
+              <el-option label="启用" value="启用"></el-option>
+              <el-option label="停用" value="停用"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="系统名称" prop="system">
+            <el-select v-model="dialog.create.formData.system" size="small">
+              <el-option label="启用" value="启用"></el-option>
+              <el-option label="停用" value="停用"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="角色编码" prop="code">
+            <el-input v-model="dialog.create.formData.code" size="small"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="排序" prop="sort">
+            <el-input v-model="dialog.create.formData.sort" size="small"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+    </el-form>
+
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="dialog.create.visible = false" size="small">取 消</el-button>
+      <el-button type="warning" :disabled="!createFormValid" @click="dialog.create.visible = false" size="small">确 定</el-button>
+    </span>
+  </el-dialog>
+
+  <el-dialog title="修改资源" :visible.sync="dialog.edit.visible" width="30%" :close-on-click-modal="false">
+    <el-form :inline="true" label-width="100px" :model="dialog.edit.formData" :rules="dialog.edit.formRules" ref="dialog.edit.formData">
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="资源名称" prop="name">
+            <el-input v-model="dialog.edit.formData.name" size="small"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="资源状态" prop="status">
+            <el-select v-model="dialog.edit.formData.status" size="small">
+              <el-option label="启用" value="启用"></el-option>
+              <el-option label="停用" value="停用"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="资源类型" prop="status">
+            <el-select v-model="dialog.edit.formData.status" size="small">
+              <el-option label="启用" value="启用"></el-option>
+              <el-option label="停用" value="停用"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="链接地址">
+            <el-input v-model="dialog.edit.formData.url" size="small"> </el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="上级目录" prop="parent">
+            <el-select v-model="dialog.edit.formData.parent" size="small">
+              <el-option label="启用" value="启用"></el-option>
+              <el-option label="停用" value="停用"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="系统名称" prop="system">
+            <el-select v-model="dialog.edit.formData.system" size="small">
+              <el-option label="启用" value="启用"></el-option>
+              <el-option label="停用" value="停用"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="角色编码" prop="code">
+            <el-input v-model="dialog.edit.formData.code" size="small"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="排序" prop="sort">
+            <el-input v-model="dialog.edit.formData.sort" size="small"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+    </el-form>
+
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="dialog.edit.visible = false" size="small">取 消</el-button>
+      <el-button type="warning" :disabled="!editFormValid" @click="dialog.edit.visible = false" size="small">确 定</el-button>
+    </span>
+  </el-dialog>
+
+  <el-dialog title="新增子项" :visible.sync="dialog.child.visible" width="30%" :close-on-click-modal="false">
+    <el-form :inline="true" label-width="100px" :model="dialog.child.formData" :rules="dialog.child.formRules" ref="dialog.child.formData">
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="资源名称" prop="name">
+            <el-input v-model="dialog.child.formData.name" size="small"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="资源状态" prop="status">
+            <el-select v-model="dialog.child.formData.status" size="small">
+              <el-option label="启用" value="启用"></el-option>
+              <el-option label="停用" value="停用"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="资源类型" prop="status">
+            <el-select v-model="dialog.child.formData.status" size="small">
+              <el-option label="启用" value="启用"></el-option>
+              <el-option label="停用" value="停用"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="链接地址">
+            <el-input v-model="dialog.child.formData.url" size="small"> </el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="上级目录" prop="parent">
+            <el-select v-model="dialog.child.formData.parent" size="small">
+              <el-option label="启用" value="启用"></el-option>
+              <el-option label="停用" value="停用"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="系统名称" prop="system">
+            <el-select v-model="dialog.child.formData.system" size="small">
+              <el-option label="启用" value="启用"></el-option>
+              <el-option label="停用" value="停用"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="角色编码" prop="code">
+            <el-input v-model="dialog.child.formData.code" size="small"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="排序" prop="sort">
+            <el-input v-model="dialog.child.formData.sort" size="small"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+    </el-form>
+
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="dialog.child.visible = false" size="small">取 消</el-button>
+      <el-button type="warning" :disabled="!createChildFormValid" @click="dialog.child.visible = false" size="small">确 定</el-button>
+    </span>
+  </el-dialog>
+
+</div>

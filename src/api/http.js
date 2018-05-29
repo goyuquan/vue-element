@@ -4,13 +4,13 @@ import { Loading } from 'element-ui'
 
 const options = {}
 const token = localStorage.getItem('token')
+axios.defaults.headers.common['Content-Type'] = 'application/json'
 if (token) {
   axios.defaults.headers.common['Authorization'] = 'token'
 }
 
-
 axios.interceptors.request.use( config => {
-  Loading.service(options);
+  Loading.service();
   console.log('request interceptor...')
   return config
 }, function (error) {
