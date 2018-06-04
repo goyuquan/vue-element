@@ -1,7 +1,7 @@
 <template src="./app.html"> </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import api from "./api"
 export default {
   name: 'app',
@@ -9,31 +9,34 @@ export default {
     return {
       isCollapse: false,
       menu: {
-        suer: '/user'
+        suer: '/user',
       },
     }
   },
   computed: {
+    authStatusClass() {
+      return this.authStatus ? 'flex' : 'none'
+    },
     ...mapGetters([
-      'isAuthenticated'
+      'authStatus'
     ]),
     ...mapState({
+      token: state => state.auth.token,
       breadcrumb: state => state.breadcrumb,
     }),
   },
   mounted() {
-    // api.common.firstLevelLst({id: 123}).then(
-    //   res => {
-    //     console.log(res);
-    //   }
-    // )
-    setTimeout(() => {
+    this.getSyscode().then( res => {
       document.body.removeChild(document.getElementById('loader'));
-    }, 0)
+    })
   },
   methods: {
+    ...mapActions([ 'getSyscode' ]),
     onLogout() {
-      this.$store.dispatch('logOut')
+      api.auth.signout().then( res => {
+          this.$store.commit('logOut')
+          this.$router.push('/login')
+      })
     },
   }
 }

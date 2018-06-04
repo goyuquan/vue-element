@@ -1,11 +1,11 @@
 /**
- * Get the first item that pass the test
- * by second argument function
- *
- * @param {Array} list
- * @param {Function} f
- * @return {*}
- */
+* Get the first item that pass the test
+* by second argument function
+*
+* @param {Array} list
+* @param {Function} f
+* @return {*}
+*/
 export function find (list, f) {
   const { length } = list
   let index = 0
@@ -19,14 +19,14 @@ export function find (list, f) {
 }
 
 /**
- * Deep copy the given object considering circular structure.
- * This function caches all usered objects and its copies.
- * If it detects circular structure, use cached copy to avoid infinite loop.
- *
- * @param {*} obj
- * @param {Array<Object>} cache
- * @return {*}
- */
+* Deep copy the given object considering circular structure.
+* This function caches all usered objects and its copies.
+* If it detects circular structure, use cached copy to avoid infinite loop.
+*
+* @param {*} obj
+* @param {Array<Object>} cache
+* @return {*}
+*/
 export function deepCopy (obj, cache = []) {
   // just return if obj is immutable value
   if (obj === null || typeof obj !== 'object') {
@@ -55,8 +55,8 @@ export function deepCopy (obj, cache = []) {
 }
 
 /**
- * forEach for object
- */
+* forEach for object
+*/
 export function forEachValue (obj, fn) {
   Object.keys(obj).forEach(key => fn(obj[key], key))
 }
@@ -71,4 +71,27 @@ export function isPromise (val) {
 
 export function assert (condition, msg) {
   if (!condition) throw new Error(`[vuex] ${msg}`)
+}
+
+export function formClean(form) {
+  const obj = {}, arr = Object.keys(form);
+  for (let v of arr) {
+    switch (Object.prototype.toString.call(form[v]).slice(8, -1)) {
+      case 'String' || 'Boolean':
+      obj[v] = '';
+      break
+      case 'Number':
+      obj[v] = null;
+      break
+      case 'Array':
+      obj[v] = [];
+      break
+      case 'Object':
+      obj[v] = formClean(form[v])
+      break
+      default:
+      obj[v] = '';
+    }
+  }
+  return obj;
 }

@@ -3,6 +3,8 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import api from "../../api"
+import validate from "../../common/validate"
+
 export default {
   name: 'user',
   data () {
@@ -68,7 +70,7 @@ export default {
             code: ''
           },
           formRules: {
-            code: { required: true, message: '必选项', trigger: ['change', 'blur'] },
+            code: validate.required,
           },
         }
       }

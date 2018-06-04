@@ -2,29 +2,23 @@ import shop from '../../api/shop'
 import http from '../../api/http'
 
 const state = {
-  status: null,
-  token: localStorage.getItem('token') || '',
-  breadcrumb: []
+  token: localStorage.getItem('token') || null,
+  breadcrumb: [],
+
 }
 
 const getters = {
-  // isAuthenticated: state => !!state.token,
-  isAuthenticated: state => true,
-  authStatus: state => state.status,
+  authStatus: state => !!state.token,
 }
 
 const mutations = {
-  AUTH_REQUEST (state) {
-    state.status = 'loading'
-  },
-  AUTH_SUCCESS (state) {
-    state.status = 'success'
-  },
-  AUTH_ERROR (state) {
-    state.status = 'error'
+  login (state, token) {
+    localStorage.removeItem('token')
+    localStorage.setItem('token', token)
+    state.token = localStorage.getItem('token')
   },
   logOut (state) {
-    state.status = false
+    state.token = null
     localStorage.removeItem('token')
   },
 }

@@ -18,13 +18,14 @@
         </el-col>
       </el-row>
       <el-form-item>
-        <el-button type="primary" @click="login()" :disabled="!formValid">登录</el-button>
+        <el-button type="primary" @click="onSubmit()" :disabled="!formValid">登录</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
+import api from "../../api"
 export default {
   name: 'login',
   data () {
@@ -41,15 +42,20 @@ export default {
   },
   computed: {
     formValid() {
-      return this.formData.name && this.formData.password;
+      return this.formData.name && this.formData.password
     }
   },
   methods: {
-    login () {
-      const { formModel } = this
-      // this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
-        this.$router.push('/')
-      // })
+    onSubmit() {
+      const { formData } = this
+      api.auth.adminlogin({
+        userAccount: formData.name,
+        userPwd: formData.password
+      }).then( res => {
+          this.$store.commit('login', res.accessToken)
+          this.$store.commit('updateUserInfo', res)
+          this.$router.push('/')
+      })
     }
   }
 }

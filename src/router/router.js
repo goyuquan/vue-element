@@ -27,7 +27,7 @@ const routes = [
     path: '/',
     component: wrap,
     children: [
-      { name: '登录', path: 'login', component: config.login, meta: { escapeAuth: true } },
+      { name: '登录', path: '/login', component: config.login, meta: { escapeAuth: true } },
       {
         name: '用户管理',
         path: 'user',
@@ -56,10 +56,8 @@ const router = new VueRouter({
   linkActiveClass: 'active'
 });
 
-// const loggedIn = false
-const loggedIn = store.getters.isAuthenticated //TODO
-
 router.beforeEach((to, from, next) => {
+  let loggedIn = store.getters.authStatus
   if (!to.matched.some(record => record.meta.escapeAuth)) { //路由守卫
     if (!loggedIn) {
       next({

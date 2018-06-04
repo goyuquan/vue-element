@@ -4,6 +4,7 @@
 import { mapState, mapGetters } from 'vuex';
 import api from "../../../api"
 import validate from "../../../common/validate"
+
 export default {
   name: 'edit',
   data () {
@@ -65,27 +66,27 @@ export default {
         ],
       },
       formRules: {
-        log_name: { required: true, message: '必填项', trigger: ['change', 'blur'] },
-        name: { required: true, message: '必填项', trigger: ['change', 'blur'] },
-        sex: { required: true, message: '必选项', trigger: ['change', 'blur'] },
+        log_name: validate.required,
+        name: validate.required,
+        sex: validate.required,
         people_id: [
-          { required: true, message: '必填项', trigger: ['change', 'blur'] },
+          validate.required,
           { validator: validate.peopleId, trigger: ['change', 'blur'] }
         ],
         cellphone: [
-          { required: true, message: '必填项', trigger: ['change', 'blur'] },
+          validate.required,
           { validator: validate.cellphone, trigger: ['change', 'blur'] }
         ],
         email: [
-          { required: true, message: '必填项', trigger: ['change', 'blur'] },
+          validate.required,
           { type: 'email', message: '请输入正确的邮箱地址', trigger: ['change', 'blur'] }
         ],
-        company: { required: true, message: '必选项', trigger: ['change', 'blur'] },
-        department: { required: true, message: '必选项', trigger: ['change', 'blur'] },
-        position: { required: true, message: '必选项', trigger: ['change', 'blur'] },
-        system: { required: true, message: '必选项', trigger: ['change', 'blur'] },
-        role: { required: true, message: '必选项', trigger: ['change', 'blur'] },
-        group: { required: true, message: '必选项', trigger: ['change', 'blur'] },
+        company: validate.required,
+        department: validate.required,
+        position: validate.required,
+        system: validate.required,
+        role: validate.required,
+        group: validate.required,
       }
     }
   },

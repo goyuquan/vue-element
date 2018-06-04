@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import auth from './modules/auth'
-import cart from './modules/cart'
-import products from './modules/products'
+import option from './modules/option'
+import api from '../api'
 
 Vue.use(Vuex);
 
@@ -10,10 +10,13 @@ const debug = process.env.NODE_ENV !== 'production'
 
 export default new Vuex.Store({
   state: {
-    breadcrumb: []
+    breadcrumb: [],
+    userInfo: localStorage.getItem('userInfo') || {},
+    systemCode: []
   },
   getters: {
     demo: state => state.breadcrumb,
+    getUserInfo: state => JSON.parse(state.userInfo),
   },
   mutations: {
     updateBreadcrumb (state, matched) {
@@ -25,17 +28,22 @@ export default new Vuex.Store({
       })
       stack[stack.length - 1].path = ''
       state.breadcrumb = stack
-    }
+    },
+    updateUserInfo(state, info) {
+      localStorage.setItem('userInfo', JSON.stringify(info))
+    },
+    // updateSyscode(state, n) {
+    //   state.systemCode = n
+    // }
   },
   actions: {
-    demo ({commit}) {
-      commit('updateBreadcrumb')
-    }
+    // getSyscode ({ commit, state }) {
+    //   api.common.adminsys().then( res => {
+    //     commit('updateSyscode', res)
+    //     return Promise.resolve()
+    //   })
+    // }
   },
-  modules: {
-    auth,
-    cart,
-    products
-  },
+  modules: { auth, option },
   strict: debug,
 })

@@ -6,8 +6,8 @@ const proxy = {
     target: "http://192.168.2.26:8080/",
     pathRewrite: {"^/api" : ""}
   },
-  "/v2": {
-    target: "https://api.douban.com/",
+  "/": {
+    target: "http://192.168.2.26:8080/",
     changeOrigin: true
   }
 };

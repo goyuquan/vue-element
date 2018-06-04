@@ -92,9 +92,9 @@ module.exports = {
     splitChunks: {
       chunks: "async",
       minSize: 30000,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
+      minChunks: 2,
+      maxAsyncRequests: 10,
+      maxInitialRequests: 5,
       automaticNameDelimiter: '~',
       name: true,
       cacheGroups: {
@@ -103,11 +103,12 @@ module.exports = {
           priority: -10
         },
         default: {
-          minChunks: 2,
+          minChunks: 3,
           priority: -20,
           reuseExistingChunk: true
         }
       }
-    }
+    },
+    noEmitOnErrors: true
   }
 };

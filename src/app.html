@@ -1,6 +1,6 @@
 <div id="app">
   <el-container>
-    <el-header v-if="isAuthenticated" height="64px" class="header">
+    <el-header :style="{display: authStatusClass}" height="64px" class="header">
       <div class="left">
         <i :class="[isCollapse ? 'active' : '', 'el-icon-more', 'nav_toggle']"
           @click="isCollapse = !isCollapse"></i>
@@ -11,7 +11,7 @@
       </div>
     </el-header>
     <el-container>
-      <el-aside class="aside" v-if="isAuthenticated">
+      <el-aside class="aside" v-if="authStatus">
         <el-menu
           :default-active="$route.path"
           class="el-menu-vertical-demo"
@@ -35,7 +35,7 @@
         </el-menu>
       </el-aside>
       <el-main>
-        <div class="breadcrumb">
+        <div class="breadcrumb" v-if="authStatus">
           <router-link
                     v-for="(item, index) in breadcrumb"
                      :key="index"

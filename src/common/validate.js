@@ -10,9 +10,12 @@ const cellphone = (rule, value, callback) => {
   }
 }
 
+const required = { required: true, message: '必选项', trigger: ['change', 'blur'] }
+
 const validate = {
   peopleId,
   cellphone,
+  required
 }
 
 export default validate
